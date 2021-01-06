@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.zhangzemiao.javaDemo'
+group 'com.zhangzemiao.leetcode'
 version '1.0-SNAPSHOT'
 
 repositories {

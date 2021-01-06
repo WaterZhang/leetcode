@@ -1,4 +1,4 @@
-package com.zhangzemiao.javaDemo;
+package com.zhangzemiao.leetcode;
 
 public class Hello {
 
