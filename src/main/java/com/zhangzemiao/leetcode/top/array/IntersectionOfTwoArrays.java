@@ -1,4 +1,4 @@
-package com.zhangzemiao.leetcode.top;
+package com.zhangzemiao.leetcode.top.array;
 
 import java.util.Arrays;
 
