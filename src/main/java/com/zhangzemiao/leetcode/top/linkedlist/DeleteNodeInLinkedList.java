@@ -23,11 +23,4 @@ public class DeleteNodeInLinkedList {
         node.next = node.next.next;
     }
 
-    private static class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x){
-            this.val = x;
-        }
-    }
 }
