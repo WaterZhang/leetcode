@@ -1,8 +1,5 @@
 package com.zhangzemiao.leetcode.top.linkedlist;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @Desc: reverse Linked List
  * @author: wzhang
