@@ -6,6 +6,7 @@ package com.zhangzemiao.leetcode.top.trees;
  * @date: 2021/2/1
  */
 public class ValidateBinarySearchTree {
+    static Integer prev;
 
     public static void main(String[] args){
         TreeNode three = new TreeNode(3);
@@ -18,77 +19,36 @@ public class ValidateBinarySearchTree {
     }
 
     private static boolean isValidBST(TreeNode root){
+        return validate(root, null, null);
+    }
+
+    //中根排序是升序
+    private static boolean inorder(TreeNode root){
+        if(root == null){
+            return true;
+        }
+        if(!inorder(root.left)){
+            return false;
+        }
+        if(prev != null && root.val <= prev){
+            return false;
+        }
+        prev = root.val;
+        return inorder(root.right);
+    }
+
+    //
+    private static boolean validate(TreeNode root, Integer min, Integer max){
+        //empty is valid BST
         if(root == null){
             return true;
         }
 
-        if(root.left == null && root.right == null){
-            return true;
+        if((min != null && root.val <= min) || (max != null && root.val >= max) ){
+            return false;
         }
 
-        boolean validLeft = true;
-        if(root.left != null){
-            if(root.val > root.left.val){
-                validLeft = isValidLeftTree(root.left, root.val);
-            } else {
-                validLeft = false;
-            }
-        }
-
-        boolean validRight = true;
-        if(root.right != null){
-            if(root.val < root.right.val){
-                validRight = isValidRightTree(root.right, root.val);
-            } else {
-                validRight = false;
-            }
-        }
-
-        return validLeft && validRight;
-    }
-
-    private static boolean isValidRightTree(TreeNode root, int min){
-        boolean validLeft = true;
-        if(root.left != null){
-            if(root.left.val < root.val && root.left.val > min){
-                validLeft = isValidLeftTree(root.left, root.val);
-            } else{
-                validLeft = false;
-            }
-        }
-
-        boolean validRight = true;
-        if(root.right != null){
-            if(root.right.val > root.val){
-                validRight = isValidRightTree(root.right, root.val);
-            } else {
-                validRight = false;
-            }
-        }
-
-        return validLeft && validRight;
-    }
-
-    private static boolean isValidLeftTree(TreeNode root, int max){
-        boolean validLeft = true;
-        if(root.left != null){
-            if(root.val > root.left.val){
-                validLeft = isValidLeftTree(root.left, root.val);
-            } else {
-                validLeft = false;
-            }
-        }
-
-        boolean validRight = true;
-        if(root.right != null){
-            if(root.right.val > root.val && root.right.val < max){
-                validRight = isValidRightTree(root.right, root.val);
-            } else {
-                validRight = false;
-            }
-        }
-
-        return validLeft && validRight;
+        return validate(root.right, root.val, max) && validate(root.left, min, root.val);
     }
 
 }
