@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class SerializeAndDeserializeBinaryTree {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        /*
+    public static void main(String[] args) {
+
         TreeNode root = new TreeNode(4);
         TreeNode l11 = new TreeNode(-7);
         TreeNode l12 = new TreeNode(-3);
@@ -47,7 +47,7 @@ public class SerializeAndDeserializeBinaryTree {
         TreeNode l43 = new TreeNode(-6);
         l32.right = l43;
 
-         */
+
 
         /*
         TreeNode l51 = new TreeNode(0);
@@ -67,11 +67,14 @@ public class SerializeAndDeserializeBinaryTree {
         l54.left = l63;
          */
 
+        /*
         TreeNode root = new TreeNode(1);
         TreeNode l11 = new TreeNode(2);
         root.left = l11;
         TreeNode l21 = new TreeNode(3);
         l11.left = l21;
+
+         */
 
         String serializeStr = serialize(root);
         System.out.println(serializeStr);
