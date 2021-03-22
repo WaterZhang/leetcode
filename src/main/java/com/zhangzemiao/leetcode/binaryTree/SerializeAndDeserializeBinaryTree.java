@@ -20,7 +20,7 @@ import java.util.List;
 public class SerializeAndDeserializeBinaryTree {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-
+        /*
         TreeNode root = new TreeNode(4);
         TreeNode l11 = new TreeNode(-7);
         TreeNode l12 = new TreeNode(-3);
@@ -47,6 +47,8 @@ public class SerializeAndDeserializeBinaryTree {
         TreeNode l43 = new TreeNode(-6);
         l32.right = l43;
 
+         */
+
         /*
         TreeNode l51 = new TreeNode(0);
         l41.left = l51;
@@ -64,6 +66,12 @@ public class SerializeAndDeserializeBinaryTree {
         TreeNode l63 = new TreeNode(-2);
         l54.left = l63;
          */
+
+        TreeNode root = new TreeNode(1);
+        TreeNode l11 = new TreeNode(2);
+        root.left = l11;
+        TreeNode l21 = new TreeNode(3);
+        l11.left = l21;
 
         String serializeStr = serialize(root);
         System.out.println(serializeStr);
@@ -87,6 +95,48 @@ public class SerializeAndDeserializeBinaryTree {
         return sb.toString();
     }
 
+    public static void traverseOneLayer(List<Integer> result,  List<TreeNode> nodes, int n){
+        if(nodes.isEmpty()){
+            return;
+        }
+        List<TreeNode> nextNodes = new ArrayList<>();
+        int nextCount = (int)Math.pow(2, n);
+        boolean allFake = true;
+        for(int i = 0; i < nodes.size(); i++){
+            TreeNode one = nodes.get(i);
+            result.add(one.val);
+            //伪造结点
+            if(one.val == Integer.MIN_VALUE){
+                nextNodes.add(new TreeNode(Integer.MIN_VALUE));
+                nextNodes.add(new TreeNode(Integer.MIN_VALUE));
+                continue;
+            } else {
+                if(one.left != null){
+                    allFake = false;
+                    nextNodes.add(one.left);
+                } else {
+                    nextNodes.add(new TreeNode(Integer.MIN_VALUE));
+                }
+                if(one.right != null){
+                    allFake = false;
+                    nextNodes.add(one.right);
+                } else {
+                    nextNodes.add(new TreeNode(Integer.MIN_VALUE));
+                }
+            }
+        }
+        //如果全都是伪造的,就不用继续递归了
+        if(allFake){
+            return;
+        } else {
+            //如果next nodes 不够 nextCount, 补齐
+            for(int i = nextNodes.size(); i < nextCount; i++){
+                nextNodes.add(new TreeNode(Integer.MIN_VALUE));
+            }
+            traverseOneLayer(result, nextNodes, n+1);
+        }
+    }
+
     public static TreeNode deserialize(String data){
         if(data == null){
             return null;
@@ -101,8 +151,46 @@ public class SerializeAndDeserializeBinaryTree {
             root = new TreeNode(result.get(0));
         }
         buildTree(result.subList(1, result.size()), Arrays.asList(root), 1);
+        cleanTree(root);
         return root;
     }
+
+    public static void cleanTree(TreeNode root){
+        if(root == null){
+            return;
+        }
+        if(root.val == Integer.MIN_VALUE){
+            root.left = null;
+            root.right = null;
+            return;
+        }
+        if(root.left != null && root.left.val == Integer.MIN_VALUE){
+            root.left = null;
+        }
+        if(root.right != null && root.right.val == Integer.MIN_VALUE){
+            root.right = null;
+        }
+        cleanTree(root.left);
+        cleanTree(root.right);
+    }
+
+
+    public static void buildTree(List<Integer> values, List<TreeNode> nodes, int n){
+        if(values.isEmpty()){
+            return;
+        }
+        List<TreeNode> nextNodes = new ArrayList<>();
+        for(TreeNode oneNode : nodes){
+            oneNode.left = new TreeNode(values.remove(0));
+            nextNodes.add(oneNode.left);
+            oneNode.right = new TreeNode(values.remove(0));
+            nextNodes.add(oneNode.right);
+        }
+        if(!values.isEmpty()){
+            buildTree(values, nextNodes, n+1);
+        }
+    }
+
 
     // cannot use input/output stream
     public static String serializeNo(TreeNode root) {
@@ -140,7 +228,7 @@ public class SerializeAndDeserializeBinaryTree {
         }
     }
 
-    public static void buildTree(List<Integer> values, List<TreeNode> nodes, int n){
+    public static void buildTreeBad(List<Integer> values, List<TreeNode> nodes, int n){
         if(values.isEmpty()){
             return;
         }
@@ -171,7 +259,7 @@ public class SerializeAndDeserializeBinaryTree {
         }
     }
 
-    public static void traverseOneLayer(List<Integer> result,  List<TreeNode> nodes, int n){
+    public static void traverseOneLayerBad(List<Integer> result,  List<TreeNode> nodes, int n){
         if(nodes.isEmpty()){
             return;
         }
