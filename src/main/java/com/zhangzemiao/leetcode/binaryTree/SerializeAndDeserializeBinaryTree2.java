@@ -24,6 +24,7 @@ public class SerializeAndDeserializeBinaryTree2 {
 
          */
 
+        /*
         TreeNode l1 = new TreeNode(1);
         TreeNode l21 = new TreeNode(2);
         l1.left = l21;
@@ -34,6 +35,17 @@ public class SerializeAndDeserializeBinaryTree2 {
         TreeNode l32 = new TreeNode(5);
         l22.right = l32;
 
+         */
+        TreeNode l1 = new TreeNode(1);
+        TreeNode l21 = new TreeNode(2);
+        l1.right = l21;
+        TreeNode l31 = new TreeNode(3);
+        l21.right = l31;
+        TreeNode l41 = new TreeNode(4);
+        l31.right = l41;
+        TreeNode l51 = new TreeNode(5);
+        l41.right = l51;
+
         String nodeString = serialize(l1);
         System.out.println(nodeString);
         TreeNode result = deserialize(nodeString);
@@ -42,7 +54,7 @@ public class SerializeAndDeserializeBinaryTree2 {
 
     public static String serialize(TreeNode root){
         if(root == null){
-            return "null"+",";
+            return "x"+",";
         }
         return root.val+","+serialize(root.left)+serialize(root.right);
     }
@@ -59,7 +71,7 @@ public class SerializeAndDeserializeBinaryTree2 {
 
     public static TreeNode buildTree(List<String> nodes){
         String value = nodes.remove(0);
-        if(value.equals("null")){
+        if(value.equals("x")){
             return null;
         }
         TreeNode newNode = new TreeNode(Integer.valueOf(value));
