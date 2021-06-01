@@ -20,8 +20,29 @@ public class OddEvenLinkedList {
         //four.next = five;
         //five.next = six;
 
-        ListNode result = oddEvenListV2(one);
+        ListNode result = oddEvenListV3(one);
         System.out.println("test");
+    }
+
+    public static ListNode oddEvenListV3(ListNode head){
+        if(head == null || head.next == null || head.next.next == null){
+            return head;
+        }
+        ListNode current = head;
+        //find odd end
+        ListNode oddEnd = null;
+        //find even edd
+        ListNode evenEnd = null;
+        while(current != null && current.next != null && current.next.next != null){
+            current = current.next.next;
+        }
+        oddEnd = current;
+        if(oddEnd.next != null){
+            evenEnd = oddEnd.next;
+        }
+
+        return null;
+
     }
 
     public static ListNode oddEvenListV2(ListNode head){
@@ -31,7 +52,7 @@ public class OddEvenLinkedList {
         ListNode current = head;
         //find odd end
         ListNode oddEnd = null;
-        //find even edd if have
+        //find even edd
         ListNode evenEnd = null;
         while(current != null && current.next != null && current.next.next != null){
             current = current.next.next;
